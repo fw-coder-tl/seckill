@@ -13,26 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.binghe.seckill.application.service;
+package io.binghe.seckill.infrastructure.utils.uuid;
 
-import io.binghe.seckill.domain.model.SeckillUser;
+import java.util.UUID;
 
 /**
  * @author binghe(微信 : hacker_binghe)
  * @version 1.0.0
- * @description 用户
+ * @description UUID工具类
  * @github https://github.com/binghe001
  * @copyright 公众号: 冰河技术
  */
-public interface SeckillUserService {
+public class UUIDUtils {
 
-    /**
-     * 根据用户名获取用户信息
-     */
-    SeckillUser getSeckillUserByUserName(String userName);
-
-    /**
-     * 登录
-     */
-    String login(String userName,String passWord);
+    public static String getUUID(){
+        return UUID.randomUUID().toString().replace("-", "");
+    }
 }

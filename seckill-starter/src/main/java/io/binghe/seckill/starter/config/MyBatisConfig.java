@@ -20,13 +20,6 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 
-/**
- * @author binghe(微信 : hacker_binghe)
- * @version 1.0.0
- * @description MyBatis配置类
- * @github https://github.com/binghe001
- * @copyright 公众号: 冰河技术
- */
 public class MyBatisConfig {
 
     @Value("${mybatis.scanpackages}")

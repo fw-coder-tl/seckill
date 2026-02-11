@@ -13,26 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.binghe.seckill.application.service;
+package io.binghe.seckill.infrastructure.serializer;
 
-import io.binghe.seckill.domain.model.SeckillUser;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import org.joda.time.DateTime;
+
+import java.io.IOException;
 
 /**
  * @author binghe(微信 : hacker_binghe)
  * @version 1.0.0
- * @description 用户
+ * @description 日期序列化
  * @github https://github.com/binghe001
  * @copyright 公众号: 冰河技术
  */
-public interface SeckillUserService {
+public class JodaDateTimeJsonSerializer extends JsonSerializer<DateTime> {
 
-    /**
-     * 根据用户名获取用户信息
-     */
-    SeckillUser getSeckillUserByUserName(String userName);
-
-    /**
-     * 登录
-     */
-    String login(String userName,String passWord);
+    @Override
+    public void serialize(DateTime value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        gen.writeString(value.toString("yyyy-MM-dd HH:mm:ss"));
+    }
 }

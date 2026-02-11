@@ -22,18 +22,11 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-/**
- * @author binghe(微信 : hacker_binghe)
- * @version 1.0.0
- * @description Spring事务编程配置类
- * @github https://github.com/binghe001
- * @copyright 公众号: 冰河技术
- */
 @Configuration
 @MapperScan(value = {"io.binghe.seckill.infrastructure.mapper"})
 @ComponentScan(value = {"io.binghe.seckill"})
 @PropertySource(value = {"classpath:properties/jdbc.properties", "classpath:properties/mybatis.properties"})
-@Import({JdbcConfig.class, MyBatisConfig.class})
+@Import({JdbcConfig.class, RedisConfig.class, MyBatisConfig.class})
 @EnableTransactionManagement(proxyTargetClass = true)
 public class TransactionConfig {
 
