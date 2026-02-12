@@ -1,5 +1,7 @@
 package io.binghe.seckill.infrastructure.shiro.utils;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
+
 /**
  * @author binghe
  * @version 1.0.0
@@ -46,7 +48,7 @@ public class CommonsUtils {
 //    }
     public static void main(String[] args) {
 		for(int i = 0; i < 100; i ++) {
-			System.out.println(encryptPassword("123456", "binghe"));
+			System.out.println(encryptPassword("123", "tianliang"));
 		}
 	}
 }

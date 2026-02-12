@@ -26,7 +26,6 @@ import io.binghe.seckill.infrastructure.shiro.utils.CommonsUtils;
 import io.binghe.seckill.infrastructure.shiro.utils.JwtUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -52,18 +51,19 @@ public class SeckillUserServiceImpl implements SeckillUserService {
     @Override
     public String login(String userName, String password) {
         // 非空判断
-        if (StringUtils.isEmpty(userName)){
+        if (StringUtils.isEmpty(userName)) {
             throw new SeckillException(HttpCode.USERNAME_IS_NULL);
         }
-        if (StringUtils.isEmpty(password)){
+        if (StringUtils.isEmpty(password)) {
             throw new SeckillException(HttpCode.PASSWORD_IS_NULL);
         }
+        // 查询用户信息
         SeckillUser seckillUser = seckillUserRepository.getSeckillUserByUserName(userName);
-        if (seckillUser == null){
+        if (seckillUser == null) {
             throw new SeckillException(HttpCode.USERNAME_IS_ERROR);
         }
         String paramsPassword = CommonsUtils.encryptPassword(password, userName);
-        if (!paramsPassword.equals(seckillUser.getPassword())){
+        if (!paramsPassword.equals(seckillUser.getPassword())) {
             throw new SeckillException(HttpCode.PASSWORD_IS_ERROR);
         }
         String token = JwtUtils.sign(seckillUser.getId());
@@ -72,5 +72,11 @@ public class SeckillUserServiceImpl implements SeckillUserService {
         redisService.set(key, seckillUser);
         //返回Token
         return token;
+    }
+
+    @Override
+    public SeckillUser getSeckillUserByUserId(Long userId) {
+        String key = SeckillConstants.getKey(SeckillConstants.USER_KEY_PREFIX, String.valueOf(userId));
+        return (SeckillUser) redisService.get(key);
     }
 }

@@ -35,4 +35,9 @@ public interface SeckillUserService {
      * 登录
      */
     String login(String userName,String passWord);
+
+    /**
+     * 根据用户id获取用户信息
+     */
+    SeckillUser getSeckillUserByUserId(Long userId);
 }
