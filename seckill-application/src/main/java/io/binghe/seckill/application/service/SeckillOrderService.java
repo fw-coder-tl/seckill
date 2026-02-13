@@ -1,7 +1,7 @@
 package io.binghe.seckill.application.service;
 
-import io.binghe.seckill.domain.dto.SeckillOrderDTO;
-import io.binghe.seckill.domain.model.SeckillOrder;
+import io.binghe.seckill.domain.model.dto.SeckillOrderDTO;
+import io.binghe.seckill.domain.model.entity.SeckillOrder;
 
 import java.util.List;
 

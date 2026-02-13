@@ -15,7 +15,7 @@
  */
 package io.binghe.seckill.infrastructure.repository;
 
-import io.binghe.seckill.domain.model.SeckillUser;
+import io.binghe.seckill.domain.model.entity.SeckillUser;
 import io.binghe.seckill.domain.repository.SeckillUserRepository;
 import io.binghe.seckill.infrastructure.mapper.SeckillUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;

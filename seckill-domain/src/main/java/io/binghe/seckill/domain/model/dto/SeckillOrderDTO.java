@@ -1,4 +1,4 @@
-package io.binghe.seckill.domain.dto;
+package io.binghe.seckill.domain.model.dto;
 
 import java.io.Serializable;
 

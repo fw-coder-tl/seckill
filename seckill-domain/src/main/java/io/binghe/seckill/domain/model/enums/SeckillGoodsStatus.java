@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.binghe.seckill.domain.enums;
+package io.binghe.seckill.domain.model.enums;
 
 /**
  * @author binghe(微信 : hacker_binghe)

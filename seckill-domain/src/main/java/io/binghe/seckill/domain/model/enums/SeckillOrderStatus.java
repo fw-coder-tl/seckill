@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.binghe.seckill.domain.enums;
+package io.binghe.seckill.domain.model.enums;
 
 /**
  * @author binghe(微信 : hacker_binghe)
@@ -22,19 +22,25 @@ package io.binghe.seckill.domain.enums;
  * @github https://github.com/binghe001
  * @copyright 公众号: 冰河技术
  */
-public enum SeckillUserStatus {
+public enum SeckillOrderStatus {
 
-    NORMAL(1),
-    FREEZE(2);
+    CREATED(1),
+    PAID(2),
+    CANCELED(0),
+    DELETED(-1);
 
     private final Integer code;
 
-    SeckillUserStatus(Integer code) {
+    SeckillOrderStatus(Integer code) {
         this.code = code;
     }
 
-    public static boolean isNormal(Integer status) {
-        return NORMAL.getCode().equals(status);
+    public static boolean isCancled(Integer status) {
+        return CANCELED.getCode().equals(status);
+    }
+
+    public static boolean isDeleted(Integer status) {
+        return DELETED.getCode().equals(status);
     }
 
     public Integer getCode() {

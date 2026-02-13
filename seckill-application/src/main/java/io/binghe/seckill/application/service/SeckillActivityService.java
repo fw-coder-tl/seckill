@@ -1,7 +1,7 @@
 package io.binghe.seckill.application.service;
 
-import io.binghe.seckill.domain.dto.SeckillActivityDTO;
-import io.binghe.seckill.domain.model.SeckillActivity;
+import io.binghe.seckill.application.command.SeckillActivityCommand;
+import io.binghe.seckill.domain.model.entity.SeckillActivity;
 
 import java.util.Date;
 import java.util.List;
@@ -10,7 +10,7 @@ public interface SeckillActivityService {
     /**
      * 保存活动信息
      */
-    void saveSeckillActivityDTO(SeckillActivityDTO seckillActivityDTO);
+    void saveSeckillActivityDTO(SeckillActivityCommand seckillActivityCommand);
 
     /**
      * 根据状态获取活动列表

@@ -1,6 +1,6 @@
 package io.binghe.seckill.domain.repository;
 
-import io.binghe.seckill.domain.model.SeckillOrder;
+import io.binghe.seckill.domain.model.entity.SeckillOrder;
 
 import java.util.List;
 
