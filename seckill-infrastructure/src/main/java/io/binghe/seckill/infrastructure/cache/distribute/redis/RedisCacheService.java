@@ -9,11 +9,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-@Component
+import org.springframework.stereotype.Service;
+@Service
 @ConditionalOnProperty(name = "distributed.cache.type",value = "redis")
 public class RedisCacheService implements DistributedCacheService {
 
