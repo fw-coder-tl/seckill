@@ -1,6 +1,7 @@
 package io.binghe.seckill.application.service;
 
 import io.binghe.seckill.application.command.SeckillActivityCommand;
+import io.binghe.seckill.domain.model.dto.SeckillActivityDTO;
 import io.binghe.seckill.domain.model.entity.SeckillActivity;
 
 import java.util.Date;
@@ -31,4 +32,9 @@ public interface SeckillActivityService {
      * 修改状态
      */
     int updateStatus(Integer status, Long id);
+
+    /**
+     * 活动列表
+     */
+    List<SeckillActivityDTO> getSeckillActivityList(Integer status, Long version);
 }

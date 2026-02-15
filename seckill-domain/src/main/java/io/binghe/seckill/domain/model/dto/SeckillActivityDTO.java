@@ -77,4 +77,12 @@ public class SeckillActivityDTO implements Serializable {
     public void setActivityDesc(String activityDesc) {
         this.activityDesc = activityDesc;
     }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 }
