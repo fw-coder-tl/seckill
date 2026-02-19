@@ -1,31 +1,14 @@
-package io.binghe.seckill.domain.model.dto;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
+package io.binghe.seckill.application.command;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
-/**
- * 秒杀商品DTO
- */
-public class SeckillGoodsDTO implements Serializable {
-    private static final long serialVersionUID = 8084686081356925122L;
-    //数据id
-    private Long id;
+public class SeckillGoodsCommond implements Serializable {
+
     //商品名称
     private String goodsName;
     //秒杀活动id
     private Long activityId;
-    //活动开始时间
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
-    private Date startTime;
-    //活动结束时间
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
-    private Date endTime;
     //商品原价
     private BigDecimal originalPrice;
     //秒杀活动价格
@@ -34,32 +17,12 @@ public class SeckillGoodsDTO implements Serializable {
     private Integer initialStock;
     //限购个数
     private Integer limitNum;
-    //当前可用库存
-    private Integer availableStock;
     //描述
     private String description;
     //图片
     private String imgUrl;
-    //秒杀状态 0：已发布； 1：上线； -1：下线
-    private Integer status;
-    //数据版本
-    private Long version;
-
-    public Integer getLimitNum() {
-        return limitNum;
-    }
-
-    public void setLimitNum(Integer limitNum) {
-        this.limitNum = limitNum;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    //版本号，默认为1，传递的是活动的版本号
+    private Long version = 1L;
 
     public String getGoodsName() {
         return goodsName;
@@ -75,22 +38,6 @@ public class SeckillGoodsDTO implements Serializable {
 
     public void setActivityId(Long activityId) {
         this.activityId = activityId;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
     }
 
     public BigDecimal getOriginalPrice() {
@@ -117,12 +64,12 @@ public class SeckillGoodsDTO implements Serializable {
         this.initialStock = initialStock;
     }
 
-    public Integer getAvailableStock() {
-        return availableStock;
+    public Integer getLimitNum() {
+        return limitNum;
     }
 
-    public void setAvailableStock(Integer availableStock) {
-        this.availableStock = availableStock;
+    public void setLimitNum(Integer limitNum) {
+        this.limitNum = limitNum;
     }
 
     public String getDescription() {
@@ -139,14 +86,6 @@ public class SeckillGoodsDTO implements Serializable {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 
     public Long getVersion() {

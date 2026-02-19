@@ -1,5 +1,6 @@
 package io.binghe.seckill.application.service;
 
+import io.binghe.seckill.application.command.SeckillGoodsCommond;
 import io.binghe.seckill.domain.model.dto.SeckillGoodsDTO;
 import io.binghe.seckill.domain.model.entity.SeckillGoods;
 
@@ -9,7 +10,7 @@ public interface SeckillGoodsService {
     /**
      * 保存商品信息
      */
-    int saveSeckillGoods(SeckillGoodsDTO seckillGoodsDTO);
+    int saveSeckillGoods(SeckillGoodsCommond seckillGoodsCommond);
 
     /**
      * 根据id获取商品详细信息
@@ -35,4 +36,9 @@ public interface SeckillGoodsService {
      * 获取当前可用库存
      */
     Integer getAvailableStockById(Long id);
+
+    /**
+     * 根据活动id从缓存中获取数据
+     */
+    List<SeckillGoodsDTO> getSeckillGoodsList(Long activityId, Long version);
 }
