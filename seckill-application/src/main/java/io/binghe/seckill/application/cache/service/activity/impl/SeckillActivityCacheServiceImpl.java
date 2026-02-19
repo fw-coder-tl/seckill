@@ -67,7 +67,9 @@ public class SeckillActivityCacheServiceImpl implements SeckillActivityCacheServ
         return getDistributedCache(activityId);
     }
 
-
+    /**
+     * 利用分布式锁保证只有一个线程去更新分布式缓存中的数据
+     */
     private SeckillBusinessCache<SeckillActivity> getDistributedCache(Long activityId) {
         logger.info("SeckillActivityCache|读取分布式缓存|{}", activityId);
         // 从分布式缓存获取数据
@@ -92,9 +94,6 @@ public class SeckillActivityCacheServiceImpl implements SeckillActivityCacheServ
         return seckillActivityCache;
     }
 
-    /**
-     * 利用分布式锁保证只有一个线程去更新分布式缓存中的数据
-     */
     @Override
     public SeckillBusinessCache<SeckillActivity> tryUpdateSeckillActivityCacheByLock(Long activityId) {
         logger.info("SeckillActivityCache|读取分布式缓存|{}", activityId);
