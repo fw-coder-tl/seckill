@@ -64,6 +64,15 @@ public class SeckillActivityController {
     }
 
     /**
+     * 获取id获取秒杀活动详情
+     */
+    @RequestMapping(value = "/seckillActivity", method = {RequestMethod.GET,RequestMethod.POST})
+    public ResponseMessage<SeckillActivityDTO> getSeckillActivityById(@RequestParam(value = "id", required = false) Long id,
+                                                                      @RequestParam(value = "version", required = false) Long version){
+        return ResponseMessageBuilder.build(HttpCode.SUCCESS.getCode(), seckillActivityService.getSeckillActivity(id, version));
+    }
+
+    /**
      * 更新活动的状态
      */
     @RequestMapping(value = "/updateStatus", method = {RequestMethod.GET,RequestMethod.POST})
