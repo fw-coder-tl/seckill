@@ -29,11 +29,11 @@ public class SeckillActivityEventHandler implements EventHandlerI<Response, Seck
     public Response execute(SeckillActivityEvent seckillActivityEvent) {
         logger.info("activityEvent|接收活动事件|{}", JSON.toJSON(seckillActivityEvent));
         if (seckillActivityEvent == null) {
-            logger.info("activityEvent|事件参数错误" );
+            logger.info("activityEvent|事件参数错误");
             return Response.buildSuccess();
         }
-        seckillActivityCacheService.tryUpdateSeckillActivityCacheByLock(seckillActivityEvent.getId());
-        seckillActivityListCacheService.tryUpdateSeckillActivityCacheByLock(seckillActivityEvent.getStatus());
+        seckillActivityCacheService.tryUpdateSeckillActivityCacheByLock(seckillActivityEvent.getId(), false);
+        seckillActivityListCacheService.tryUpdateSeckillActivityCacheByLock(seckillActivityEvent.getStatus(), false);
         return Response.buildSuccess();
     }
 }

@@ -72,7 +72,7 @@ public class SeckillActivityListCacheServiceImpl implements SeckillActivityListC
         logger.info("SeckillActivitesCache|读取分布式缓存|{}", status);
         SeckillBusinessCache<List<SeckillActivity>> seckillActivitiyListCache = SeckillActivityBuilder.getSeckillBusinessCacheList(distributedCacheService.getObject(buildCacheKey(status)), SeckillActivity.class);
         if (seckillActivitiyListCache == null) {
-            tryUpdateSeckillActivityCacheByLock(status);
+            tryUpdateSeckillActivityCacheByLock(status, true);
         }
         if (seckillActivitiyListCache != null && !seckillActivitiyListCache.isRetryLater()) {
             if (localCacheUpdatelock.tryLock()) {
@@ -88,7 +88,7 @@ public class SeckillActivityListCacheServiceImpl implements SeckillActivityListC
     }
 
     @Override
-    public SeckillBusinessCache<List<SeckillActivity>> tryUpdateSeckillActivityCacheByLock(Integer status) {
+    public SeckillBusinessCache<List<SeckillActivity>> tryUpdateSeckillActivityCacheByLock(Integer status, boolean doubleCheck) {
         logger.info("SeckillActivitesCache|更新分布式缓存|{}", status);
         DistributedLock lock = distributedLockFactory.getDistributedLock(SECKILL_ACTIVITES_UPDATE_CACHE_LOCK_KEY.concat(String.valueOf(status)));
         try {
@@ -96,14 +96,17 @@ public class SeckillActivityListCacheServiceImpl implements SeckillActivityListC
             if (!isLockSuccess) {
                 return new SeckillBusinessCache<List<SeckillActivity>>().retryLater();
             }
-            //获取锁成功后，再次从缓存中获取数据，防止高并发下多个线程争抢锁的过程中，后续的线程在等待1秒的过程中，前面的线程释放了锁，后续的线程获取锁成功后再次更新分布式缓存数据
-            SeckillBusinessCache<List<SeckillActivity>> seckillActivitiyListCache = SeckillActivityBuilder.getSeckillBusinessCacheList(distributedCacheService.getObject(buildCacheKey(status)),  SeckillActivity.class);
-            if (seckillActivitiyListCache != null){
-                return seckillActivitiyListCache;
+            SeckillBusinessCache<List<SeckillActivity>> seckillActivitiyListCache;
+            if (doubleCheck){
+                //获取锁成功后，再次从缓存中获取数据，防止高并发下多个线程争抢锁的过程中，后续的线程在等待1秒的过程中，前面的线程释放了锁，后续的线程获取锁成功后再次更新分布式缓存数据
+                seckillActivitiyListCache = SeckillActivityBuilder.getSeckillBusinessCacheList(distributedCacheService.getObject(buildCacheKey(status)),  SeckillActivity.class);
+                if (seckillActivitiyListCache != null){
+                    return seckillActivitiyListCache;
+                }
             }
             // 查询数据库
             List<SeckillActivity> seckillActivityList = seckillActivityRepository.getSeckillActivityList(status);
-            if(seckillActivityList==null){
+            if (seckillActivityList == null) {
                 seckillActivitiyListCache = new SeckillBusinessCache<List<SeckillActivity>>().notExist();
             } else {
                 seckillActivitiyListCache = new SeckillBusinessCache<List<SeckillActivity>>().with(seckillActivityList).withVersion(SystemClock.millisClock().now());

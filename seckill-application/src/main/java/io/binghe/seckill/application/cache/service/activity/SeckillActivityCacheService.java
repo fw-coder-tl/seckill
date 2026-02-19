@@ -17,5 +17,5 @@ public interface SeckillActivityCacheService extends SeckillCacheService {
     /**
      * 跟新缓存数据
      */
-    SeckillBusinessCache<SeckillActivity> tryUpdateSeckillActivityCacheByLock(Long activityId);
+    SeckillBusinessCache<SeckillActivity> tryUpdateSeckillActivityCacheByLock(Long activityId,boolean doubleCheck);
 }

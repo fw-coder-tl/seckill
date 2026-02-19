@@ -4,9 +4,7 @@ import com.alibaba.fastjson.JSON;
 import io.binghe.seckill.application.builder.SeckillGoodsBuilder;
 import io.binghe.seckill.application.cache.model.SeckillBusinessCache;
 import io.binghe.seckill.application.cache.service.goods.SeckillGoodsListCacheService;
-import io.binghe.seckill.application.service.SeckillGoodsService;
 import io.binghe.seckill.domain.constants.SeckillConstants;
-import io.binghe.seckill.domain.model.dto.SeckillGoodsDTO;
 import io.binghe.seckill.domain.model.entity.SeckillGoods;
 import io.binghe.seckill.domain.repository.SeckillGoodsRepository;
 import io.binghe.seckill.infrastructure.cache.distribute.DistributedCacheService;
@@ -54,19 +52,19 @@ public class SeckillGoodsListCacheServiceImpl implements SeckillGoodsListCacheSe
     public SeckillBusinessCache<List<SeckillGoods>> getCachedGoodsList(Long activityId, Long version) {
         //获取本地缓存中的数据
         SeckillBusinessCache<List<SeckillGoods>> seckillGoodsListCache = localCacheService.getIfPresent(activityId);
-        if (seckillGoodsListCache != null){
+        if (seckillGoodsListCache != null) {
             //版本号为空，表示命中本地缓存
-            if (version == null){
+            if (version == null) {
                 logger.info("SeckillGoodsListCache|命中本地缓存|{}", activityId);
                 return seckillGoodsListCache;
             }
             //传递的版本号比缓存中的版本号小，则直接返回缓存中的数据
-            if (version.compareTo(seckillGoodsListCache.getVersion()) <= 0){
+            if (version.compareTo(seckillGoodsListCache.getVersion()) <= 0) {
                 logger.info("SeckillGoodsListCache|命中本地缓存|{}", activityId);
                 return seckillGoodsListCache;
             }
             //传递的版本号大于缓存中色版本号，则更新缓存
-            if (version.compareTo(seckillGoodsListCache.getVersion()) > 0){
+            if (version.compareTo(seckillGoodsListCache.getVersion()) > 0) {
                 return getDistributedCache(activityId);
             }
         }
@@ -80,16 +78,16 @@ public class SeckillGoodsListCacheServiceImpl implements SeckillGoodsListCacheSe
         logger.info("SeckillGoodsListCache|读取分布式缓存|{}", activityId);
         SeckillBusinessCache<List<SeckillGoods>> seckillGoodsListCache = SeckillGoodsBuilder.getSeckillBusinessCacheList(distributedCacheService.getObject(buildCacheKey(activityId)), SeckillGoods.class);
         //分布式缓存中的数据为空
-        if (seckillGoodsListCache == null){
+        if (seckillGoodsListCache == null) {
             //使用一个线程尝试去更新分布式缓存中的数据
-            seckillGoodsListCache = tryUpdateSeckillGoodsCacheByLock(activityId);
+            seckillGoodsListCache = tryUpdateSeckillGoodsCacheByLock(activityId, true);
         }
-        if (seckillGoodsListCache != null && !seckillGoodsListCache.isRetryLater()){
-            if (localCacheUpdatelock.tryLock()){
+        if (seckillGoodsListCache != null && !seckillGoodsListCache.isRetryLater()) {
+            if (localCacheUpdatelock.tryLock()) {
                 try {
                     localCacheService.put(activityId, seckillGoodsListCache);
                     logger.info("SeckillGoodsListCache|本地缓存已经更新|{}", activityId);
-                }finally {
+                } finally {
                     localCacheUpdatelock.unlock();
                 }
             }
@@ -101,23 +99,26 @@ public class SeckillGoodsListCacheServiceImpl implements SeckillGoodsListCacheSe
      * 尝试去更新分布式缓存中的数据
      */
     @Override
-    public SeckillBusinessCache<List<SeckillGoods>> tryUpdateSeckillGoodsCacheByLock(Long activityId) {
+    public SeckillBusinessCache<List<SeckillGoods>> tryUpdateSeckillGoodsCacheByLock(Long activityId, boolean doubleCheck) {
         logger.info("SeckillGoodsListCache|更新分布式缓存|{}", activityId);
         DistributedLock lock = distributedLockFactory.getDistributedLock(SECKILL_GOODS_LIST_UPDATE_CACHE_LOCK_KEY.concat(String.valueOf(activityId)));
         try {
             boolean isSuccess = lock.tryLock(2, 5, TimeUnit.SECONDS);
-            if (!isSuccess){
+            if (!isSuccess) {
                 return new SeckillBusinessCache<List<SeckillGoods>>().retryLater();
             }
-            //获取锁成功后，再次从缓存中获取数据，防止高并发下多个线程争抢锁的过程中，后续的线程在等待1秒的过程中，前面的线程释放了锁，后续的线程获取锁成功后再次更新分布式缓存数据
-            SeckillBusinessCache<List<SeckillGoods>> seckillGoodsListCache = SeckillGoodsBuilder.getSeckillBusinessCacheList(distributedCacheService.getObject(buildCacheKey(activityId)), SeckillGoods.class);
-            if (seckillGoodsListCache != null){
-                return seckillGoodsListCache;
+            SeckillBusinessCache<List<SeckillGoods>> seckillGoodsListCache;
+            if (doubleCheck){
+                //获取锁成功后，再次从缓存中获取数据，防止高并发下多个线程争抢锁的过程中，后续的线程在等待1秒的过程中，前面的线程释放了锁，后续的线程获取锁成功后再次更新分布式缓存数据
+                seckillGoodsListCache = SeckillGoodsBuilder.getSeckillBusinessCacheList(distributedCacheService.getObject(buildCacheKey(activityId)), SeckillGoods.class);
+                if (seckillGoodsListCache != null){
+                    return seckillGoodsListCache;
+                }
             }
             List<SeckillGoods> seckillGoodsList = seckillGoodsRepository.getSeckillGoodsByActivityId(activityId);
-            if (seckillGoodsList == null){
+            if (seckillGoodsList == null) {
                 seckillGoodsListCache = new SeckillBusinessCache<List<SeckillGoods>>().notExist();
-            }else {
+            } else {
                 seckillGoodsListCache = new SeckillBusinessCache<List<SeckillGoods>>().with(seckillGoodsList).withVersion(SystemClock.millisClock().now());
             }
             //更新到分布式缓存中
@@ -127,7 +128,8 @@ public class SeckillGoodsListCacheServiceImpl implements SeckillGoodsListCacheSe
         } catch (InterruptedException e) {
             logger.info("SeckillGoodsListCache|更新分布式缓存失败|{}", activityId);
             return new SeckillBusinessCache<List<SeckillGoods>>().retryLater();
-        }finally {
-            lock.unlock();        }
+        } finally {
+            lock.unlock();
+        }
     }
 }
