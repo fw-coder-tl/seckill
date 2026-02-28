@@ -1,10 +1,11 @@
-package io.binghe.seckill.domain.repository;
+package io.binghe.seckill.domain.service;
 
 import io.binghe.seckill.domain.model.entity.SeckillOrder;
 
 import java.util.List;
 
-public interface SeckillOrderRepository {
+public interface SeckillOrderDomainService {
+
     /**
      * 保存订单
      */

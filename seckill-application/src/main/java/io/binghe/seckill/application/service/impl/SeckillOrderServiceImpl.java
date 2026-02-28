@@ -10,6 +10,7 @@ import io.binghe.seckill.domain.exception.SeckillException;
 import io.binghe.seckill.domain.model.entity.SeckillGoods;
 import io.binghe.seckill.domain.model.entity.SeckillOrder;
 import io.binghe.seckill.domain.repository.SeckillOrderRepository;
+import io.binghe.seckill.domain.service.SeckillOrderDomainService;
 import io.binghe.seckill.infrastructure.utils.beans.BeanUtil;
 import io.binghe.seckill.infrastructure.utils.id.SnowFlakeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class SeckillOrderServiceImpl implements SeckillOrderService {
     @Autowired
     private SeckillGoodsService seckillGoodsService;
     @Autowired
-    private SeckillOrderRepository seckillOrderRepository;
+    private SeckillOrderDomainService seckillOrderDomainService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -68,7 +69,7 @@ public class SeckillOrderServiceImpl implements SeckillOrderService {
         seckillOrder.setStatus(SeckillOrderStatus.CREATED.getCode());
         seckillOrder.setCreateTime(new Date());
         //保存订单
-        seckillOrderRepository.saveSeckillOrder(seckillOrder);
+        seckillOrderDomainService.saveSeckillOrder(seckillOrder);
         //扣减库存
         seckillGoodsService.updateAvailableStock(seckillOrderDTO.getQuantity(), seckillOrderDTO.getGoodsId());
         return seckillOrder;
@@ -76,11 +77,11 @@ public class SeckillOrderServiceImpl implements SeckillOrderService {
 
     @Override
     public List<SeckillOrder> getSeckillOrderByUserId(Long userId) {
-        return seckillOrderRepository.getSeckillOrderByUserId(userId);
+        return seckillOrderDomainService.getSeckillOrderByUserId(userId);
     }
 
     @Override
     public List<SeckillOrder> getSeckillOrderByActivityId(Long activityId) {
-        return seckillOrderRepository.getSeckillOrderByActivityId(activityId);
+        return seckillOrderDomainService.getSeckillOrderByActivityId(activityId);
     }
 }
