@@ -10,7 +10,7 @@ public interface SeckillGoodsService {
     /**
      * 保存商品信息
      */
-    int saveSeckillGoods(SeckillGoodsCommond seckillGoodsCommond);
+    void saveSeckillGoods(SeckillGoodsCommond seckillGoodsCommond);
 
     /**
      * 根据id获取商品详细信息
@@ -25,12 +25,12 @@ public interface SeckillGoodsService {
     /**
      * 修改商品状态
      */
-    int updateStatus(Integer status, Long id);
+    void updateStatus(Integer status, Long id);
 
     /**
      * 扣减库存
      */
-    int updateAvailableStock(Integer count, Long id);
+     void updateAvailableStock(Integer count, Long id);
 
     /**
      * 获取当前可用库存

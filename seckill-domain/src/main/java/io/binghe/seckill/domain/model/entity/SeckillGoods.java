@@ -15,6 +15,7 @@
  */
 package io.binghe.seckill.domain.model.entity;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -161,5 +162,25 @@ public class SeckillGoods implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public boolean validateParams(){
+        if (StringUtils.isEmpty(goodsName)
+                || activityId == null
+                || startTime == null
+                || endTime == null
+                || startTime.after(endTime)
+                || endTime.before(new Date())
+                || activityPrice == null
+                || activityPrice.compareTo(BigDecimal.ZERO) < 0
+                || originalPrice == null
+                || originalPrice.compareTo(BigDecimal.ZERO) < 0
+                || initialStock == null
+                || initialStock <= 0
+                || limitNum == null
+                || limitNum <= 0){
+            return false;
+        }
+        return true;
     }
 }
