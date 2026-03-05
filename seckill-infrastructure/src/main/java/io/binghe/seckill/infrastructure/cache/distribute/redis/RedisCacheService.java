@@ -8,18 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import org.springframework.stereotype.Service;
+
 @Service
-@ConditionalOnProperty(name = "distributed.cache.type",value = "redis")
+@ConditionalOnProperty(name = "distributed.cache.type", value = "redis")
 public class RedisCacheService implements DistributedCacheService {
 
     @Autowired
-    private RedisTemplate<String,Object> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public void put(String key, String value) {
@@ -105,5 +104,15 @@ public class RedisCacheService implements DistributedCacheService {
 
     public RedisTemplate<String, Object> getRedisTemplate() {
         return redisTemplate;
+    }
+
+    @Override
+    public Long decrement(String key, long delta) {
+        return redisTemplate.opsForValue().decrement(key, delta);
+    }
+
+    @Override
+    public Long increment(String key, long delta) {
+        return redisTemplate.opsForValue().increment(key, delta);
     }
 }
