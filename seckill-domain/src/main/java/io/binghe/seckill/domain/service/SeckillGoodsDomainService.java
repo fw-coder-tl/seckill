@@ -29,7 +29,13 @@ public interface SeckillGoodsDomainService {
     /**
      * 扣减库存
      */
-    void updateAvailableStock(Integer count, Long id);
+    boolean updateAvailableStock(Integer count, Long id);
+
+    /**
+     * 扣减数据库库存
+     */
+    //扣减数据库库存
+    boolean updateDbAvailableStock(Integer count, Long id);
 
 
     /**

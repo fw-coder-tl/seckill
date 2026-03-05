@@ -7,19 +7,49 @@ package io.binghe.seckill.domain.constants;
 public class SeckillConstants {
 
     /**
-     * 用户缓存前缀
+     * 商品key前缀
      */
-    public static final String USER_KEY_PREFIX = "user_";
+    public static final String GOODS_ITEM_KEY_PREFIX = "item:";
 
     /**
-     * 获取key
+     * 订单Key前缀
+     */
+    public static final String ORDER_KEY_PREFIX = "order:";
+
+    /**
+     * 订单锁
+     */
+    public static final String ORDER_LOCK_KEY_PREFIX = "order:lock:";
+
+    /**
+     * 商品库存的Key
+     */
+    public static final String GOODS_ITEM_STOCK_KEY_PREFIX = "item:stock:";
+
+    /**
+     * 商品限购数量Key
+     */
+    public static final String GOODS_ITEM_LIMIT_KEY_PREFIX = "item:limit:";
+
+    /**
+     * 商品上架标识
+     */
+    public static final String GOODS_ITEM_ONLINE_KEY_PREFIX = "item:onffline:";
+
+    /**
+     * 用户缓存前缀
+     */
+    public static final String USER_KEY_PREFIX = "user:";
+
+    /**
+     * 获取Key
      */
     public static String getKey(String prefix, String key) {
         return prefix.concat(key);
     }
 
     /**
-     * token的载荷中存放的信息 只存放一个userId
+     * token的载荷中盛放的信息 只盛放一个userName 其余什么也不再盛放
      */
     public static final String TOKEN_CLAIM = "userId";
 
@@ -37,6 +67,7 @@ public class SeckillConstants {
      * JWT的密钥
      */
     public static final String JWT_SECRET = "a814edb0e7c1ba4c";
+
 
     /*****************缓存相关的配置****************/
     public static final Long FIVE_MINUTES = 5 * 60L;

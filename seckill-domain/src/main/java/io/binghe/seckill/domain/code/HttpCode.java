@@ -1,9 +1,27 @@
+/**
+ * Copyright 2022-9999 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.binghe.seckill.domain.code;
 
 /**
- * 状态码枚举类
+ * @author binghe(微信 : hacker_binghe)
+ * @version 1.0.0
+ * @description
+ * @github https://github.com/binghe001
+ * @copyright 公众号: 冰河技术
  */
-
 public enum HttpCode {
 
     SUCCESS(1001, "成功"),
@@ -24,14 +42,15 @@ public enum HttpCode {
     DATA_PARSE_FAILED(2015, "数据解析失败"),
     RETRY_LATER(2016, "稍后再试"),
     USER_INVALID(2017, "当前账户异常，不能参与秒杀"),
-    GOODS_PUBLISH(2018, "商品未上线");
+    GOODS_PUBLISH(2018, "商品未上线"),
+    ORDER_FAILED(2019, "下单失败");
 
     private final Integer code;
-    private final String message;
+    private final String mesaage;
 
-    HttpCode(Integer code, String message) {
+    HttpCode(Integer code, String mesaage) {
         this.code = code;
-        this.message = message;
+        this.mesaage = mesaage;
     }
 
     public Integer getCode() {
@@ -39,6 +58,7 @@ public enum HttpCode {
     }
 
     public String getMessage() {
-        return message;
+        return mesaage;
     }
+
 }

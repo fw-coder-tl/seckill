@@ -24,7 +24,7 @@
     </insert>
 
     <select id="getSeckillOrderByUserId" resultMap="baseResultMap">
-        select <include refid="Base_Column_List"/> from seckill_order where user_id = #{userId}
+        select <include refid="Base_Column_List"/> from seckill_order where user_id = #{userId} and available_stock >= #{count}
     </select>
 
     <select id="getSeckillOrderByActivityId" resultMap="baseResultMap">
