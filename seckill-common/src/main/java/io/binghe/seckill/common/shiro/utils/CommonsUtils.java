@@ -1,12 +1,6 @@
 package io.binghe.seckill.common.shiro.utils;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
-
-/**
- * @author binghe
- * @version 1.0.0
- * @description 工具类
- */
 public class CommonsUtils {
 
 

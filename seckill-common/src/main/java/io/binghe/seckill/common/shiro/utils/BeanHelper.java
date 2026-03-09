@@ -10,12 +10,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
-/**
- * @author binghe
- * @version 1.0.0
- * @description Bean转换的工具类
- */
 public class BeanHelper {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(BeanHelper.class);

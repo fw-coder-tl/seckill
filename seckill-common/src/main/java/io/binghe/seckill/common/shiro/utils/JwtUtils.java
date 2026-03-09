@@ -11,9 +11,6 @@ import io.binghe.seckill.common.constants.SeckillConstants;
 import java.util.Date;
 
 /**
- * @author binghe
- * @version 1.0.0
- * @description 需要注意的是 这边校验的方式并非非对称加密
  * 可以改造为非对称加密: 公钥加密，私钥解密 私钥生成签名，公钥验证签名
  */
 public class JwtUtils {

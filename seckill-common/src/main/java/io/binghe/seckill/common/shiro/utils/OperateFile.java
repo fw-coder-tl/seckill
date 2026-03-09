@@ -9,12 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-
-/**
- * @author binghe
- * @version 1.0.0
- * @description 处理文件的工具类
- */
 @SuppressWarnings("deprecation")
 public class OperateFile {
 

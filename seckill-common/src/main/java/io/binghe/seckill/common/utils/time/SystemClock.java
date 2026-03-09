@@ -4,12 +4,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
-
-/**
- * @author binghe
- * @version 1.0.0
- * @description 时间戳性能优化
- */
 public class SystemClock {
 
     private static final String THREAD_NAME = "system.clock";

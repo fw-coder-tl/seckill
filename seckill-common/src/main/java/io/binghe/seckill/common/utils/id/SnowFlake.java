@@ -1,12 +1,6 @@
 package io.binghe.seckill.common.utils.id;
 
 import java.util.Date;
-
-/**
- * @author binghe
- * @version 1.0.0
- * @description 雪花算法生成分布式序列号
- */
 public class SnowFlake {
     /**
      * 起始的时间戳:2023-04-19 13:42:00，使用时此值不可修改

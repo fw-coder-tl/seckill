@@ -8,12 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 import java.util.Date;
-
-/**
- * @author binghe
- * @version 1.0.0
- * @description 时间工具类
- */
 public class LocalDateTimeUtils {
 
     /**

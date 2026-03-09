@@ -9,12 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
-/**
- * @author binghe
- * @version 1.0.0
- * @description Json序列化工具
- */
 public class JsonUtils {
 
     public static final ObjectMapper mapper = new ObjectMapper();

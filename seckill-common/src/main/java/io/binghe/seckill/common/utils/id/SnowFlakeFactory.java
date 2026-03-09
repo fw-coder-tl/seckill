@@ -2,12 +2,6 @@ package io.binghe.seckill.common.utils.id;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
-/**
- * @author binghe
- * @version 1.0.0
- * @description 雪花算法工厂
- */  
 public class SnowFlakeFactory {	
 	
 	/**
