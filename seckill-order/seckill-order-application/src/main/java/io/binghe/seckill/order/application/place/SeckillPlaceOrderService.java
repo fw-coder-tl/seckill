@@ -17,7 +17,7 @@ public interface SeckillPlaceOrderService {
     /**
      * 下单操作
      */
-    Long placeOrder(Long userId, SeckillOrderCommand seckillOrderCommand);
+    Long placeOrder(Long userId, SeckillOrderCommand seckillOrderCommand, Long txNo);
 
     /**
      * 构建订单
