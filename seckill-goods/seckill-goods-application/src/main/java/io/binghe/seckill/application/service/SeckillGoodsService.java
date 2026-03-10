@@ -42,6 +42,8 @@ public interface SeckillGoodsService {
      */
     boolean updateAvailableStock(Integer count, Long id);
 
+    boolean incrementAvailableStock(Integer count, Long id);
+
     /**
      * 扣减数据库库存
      */

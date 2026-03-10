@@ -19,33 +19,53 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, goods_name, activity_id, start_time, end_time, original_price,
+        id
+        , goods_name, activity_id, start_time, end_time, original_price,
             activity_price, initial_stock, available_stock, description, img_url, status, limit_num
     </sql>
 
     <insert id="saveSeckillGoods" parameterType="io.binghe.seckill.goods.domain.model.entity.SeckillGoods">
-        insert into seckill_goods(  <include refid="Base_Column_List"/> )
+        insert into seckill_goods(
+        <include refid="Base_Column_List"/>
+        )
         values (#{id}, #{goodsName}, #{activityId}, #{startTime}, #{endTime}, #{originalPrice}, #{activityPrice},
-                #{initialStock}, #{availableStock}, #{description}, #{imgUrl}, #{status}, #{limitNum})
+        #{initialStock}, #{availableStock}, #{description}, #{imgUrl}, #{status}, #{limitNum})
     </insert>
 
     <select id="getSeckillGoodsId" resultMap="baseResultMap">
-        select  <include refid="Base_Column_List" /> from seckill_goods where id = #{id}
+        select
+        <include refid="Base_Column_List"/>
+        from seckill_goods where id = #{id}
     </select>
 
     <select id="getSeckillGoodsByActivityId" resultMap="baseResultMap">
-        select <include refid="Base_Column_List" /> from seckill_goods where activity_id = #{activityId}
+        select
+        <include refid="Base_Column_List"/>
+        from seckill_goods where activity_id = #{activityId}
     </select>
 
     <update id="updateStatus">
-        update seckill_goods set status = #{status} where id = #{id}
+        update seckill_goods
+        set status = #{status}
+        where id = #{id}
     </update>
 
     <update id="updateAvailableStock">
-        update seckill_goods set available_stock = available_stock - #{count} where id = #{id} and available_stock >= #{count}
+        update seckill_goods
+        set available_stock = available_stock - #{count}
+        where id = #{id}
+          and available_stock >= #{count}
+    </update>
+
+    <update id="incrementAvailableStock">
+        update seckill_goods
+        set available_stock = available_stock + #{count}
+        where id = #{id}
     </update>
 
     <select id="getAvailableStockById" resultType="java.lang.Integer">
-        select available_stock from  seckill_goods where id = #{id}
+        select available_stock
+        from seckill_goods
+        where id = #{id}
     </select>
 </mapper>

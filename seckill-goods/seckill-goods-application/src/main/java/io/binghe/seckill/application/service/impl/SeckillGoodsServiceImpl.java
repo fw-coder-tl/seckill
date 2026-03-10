@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 public class SeckillGoodsServiceImpl implements SeckillGoodsService {
     @Autowired
     private SeckillGoodsDomainService seckillGoodsDomainService;
-    @DubboReference(version = "1.0.0")
+    @DubboReference(version = "1.0.0", check = false)
     private SeckillActivityDubboService seckillActivityDubboService;
     @Autowired
     private LocalCacheService<String, SeckillGoods> localCacheService;
@@ -147,6 +147,11 @@ public class SeckillGoodsServiceImpl implements SeckillGoodsService {
             this.clearCache(String.valueOf(id));
         }
         seckillGoodsDomainService.updateStatus(status, id);
+    }
+
+    @Override
+    public boolean incrementAvailableStock(Integer count, Long id) {
+        return seckillGoodsDomainService.incrementAvailableStock(count, id);
     }
 
     /**

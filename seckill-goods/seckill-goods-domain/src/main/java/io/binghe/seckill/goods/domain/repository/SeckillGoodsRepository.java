@@ -31,6 +31,11 @@ public interface SeckillGoodsRepository {
      */
     int updateAvailableStock(Integer count, Long id);
 
+    /**
+     * 增加库存
+     */
+    int incrementAvailableStock(Integer count, Long id);
+
 
     /**
      * 获取当前可用库存
