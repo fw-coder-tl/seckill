@@ -1,6 +1,8 @@
 package io.binghe.seckill.dubbo.interfaces.goods;
 
 import io.binghe.seckill.common.model.dto.SeckillGoodsDTO;
+import org.dromara.hmily.annotation.Hmily;
+
 public interface SeckillGoodsDubboService {
 
     /**
@@ -12,4 +14,10 @@ public interface SeckillGoodsDubboService {
      * 扣减数据库库存
      */
     boolean updateDbAvailableStock(Integer count, Long id);
+
+    /**
+     * 扣减商品库存
+     */
+    @Hmily
+    boolean updateAvailableStock(Integer count, Long id, Long txNo);
 }

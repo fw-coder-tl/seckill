@@ -27,6 +27,31 @@ public class SeckillConstants {
     public static final String ORDER_KEY_PREFIX = "order:";
 
     /**
+     * tcc try
+     */
+    public static final String ORDER_TRY_KEY_PREFIX = "order:try:";
+
+    /**
+     * tcc confirm
+     */
+    public static final String ORDER_CONFIRM_KEY_PREFIX = "order:confirm:";
+
+    /**
+     * tcc cancel
+     */
+    public static final String ORDER_CANCEL_KEY_PREFIX = "order:cancel:";
+
+    /**
+     * 订单
+     */
+    public static final String ORDER_KEY = "order";
+
+    /**
+     * 商品
+     */
+    public static final String GOODS_KEY = "goods";
+
+    /**
      * 订单锁
      */
     public static final String ORDER_LOCK_KEY_PREFIX = "order:lock:";
