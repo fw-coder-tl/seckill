@@ -2,6 +2,7 @@ package io.binghe.seckill.order.application.service.impl;
 
 import io.binghe.seckill.common.exception.ErrorCode;
 import io.binghe.seckill.common.exception.SeckillException;
+import io.binghe.seckill.common.utils.id.SnowFlakeFactory;
 import io.binghe.seckill.order.application.command.SeckillOrderCommand;
 import io.binghe.seckill.order.application.place.SeckillPlaceOrderService;
 import io.binghe.seckill.order.application.security.SecurityService;
@@ -33,7 +34,7 @@ public class SeckillOrderServiceImpl implements SeckillOrderService {
         if (!securityService.securityPolicy(userId)){
             throw new SeckillException(ErrorCode.USER_INVALID);
         }
-        return seckillPlaceOrderService.placeOrder(userId, seckillOrderCommand);
+        return seckillPlaceOrderService.placeOrder(userId, seckillOrderCommand, SnowFlakeFactory.getSnowFlakeFromCache().nextId());
     }
 
     @Override
