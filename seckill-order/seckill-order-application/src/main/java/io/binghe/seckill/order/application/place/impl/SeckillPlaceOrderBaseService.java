@@ -27,6 +27,10 @@ public class SeckillPlaceOrderBaseService {
 
     @Transactional(rollbackFor = Exception.class)
     public Long confirmMethod(Long userId, SeckillOrderCommand seckillOrderCommand, Long txNo){
+        if (!distributedCacheService.isMemberSet(SeckillConstants.getKey(SeckillConstants.ORDER_TRY_KEY_PREFIX, SeckillConstants.ORDER_KEY), txNo)){
+            logger.warn("confirmMethod|未执行过Try方法,txNo:{}", txNo);
+            return txNo;
+        }
         if (distributedCacheService.isMemberSet(SeckillConstants.getKey(SeckillConstants.ORDER_CONFIRM_KEY_PREFIX, SeckillConstants.ORDER_KEY), txNo)){
             logger.warn("confirmMethod|提交订单已经执行过Condirm方法,txNo:{}", txNo);
             return txNo;

@@ -69,6 +69,10 @@ public class SeckillGoodsDubboServiceImpl implements SeckillGoodsDubboService {
 
     @Transactional(rollbackFor = Exception.class)
     public boolean confirmMethod(Integer count, Long id, Long txNo){
+        if (!distributedCacheService.isMemberSet(SeckillConstants.getKey(SeckillConstants.ORDER_TRY_KEY_PREFIX, SeckillConstants.GOODS_KEY), txNo)){
+            logger.warn("confirmMethod|未过Try方法|{}", txNo);
+            return false;
+        }
         if (distributedCacheService.isMemberSet(SeckillConstants.getKey(SeckillConstants.ORDER_CONFIRM_KEY_PREFIX, SeckillConstants.GOODS_KEY), txNo)){
             logger.warn("confirmMethod|更新库存已经执行过Confirm方法|{}", txNo);
             return false;
